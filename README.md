@@ -24,7 +24,7 @@ This application allows users to dynamically schedule tasks using a user-friendl
 1. Clone the repository:
 
    ```bash
-   [git clone https://github.com/Sehastrajit/Dynamic-Task-Schedule.git](https://github.com/Sehastrajit/Dynamic-Task-Schedule.git)
+   git clone https://github.com/Sehastrajit/Dynamic-Task-Schedule.git
    cd Dynamic-Task-Schedule
    ```
 
