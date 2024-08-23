@@ -1,38 +1,29 @@
-//main.dart
+//lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:myapp/dash.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:myapp/models/time_table_entry.dart';
+import 'package:myapp/screens/dash.dart';
 
-List<CameraDescription> cameras = [];
-
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Request camera permission
-  await Permission.camera.request();
-
-  cameras = await availableCameras();
-  runApp(MyApp(cameras: cameras));
+  await Hive.initFlutter();
+  Hive.registerAdapter(TimeTableEntryAdapter());
+  await Hive.openBox<TimeTableEntry>('timetables');
+  runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
-  final List<CameraDescription> cameras;
-
-  const MyApp({super.key, required this.cameras});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Yolo detection',
+      title: 'Time Table Generator',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 127, 39)),
+        primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: Dash(cameras: cameras), // Pass the cameras list to the Dash widget
+      home: const DashScreen(),
     );
   }
 }
